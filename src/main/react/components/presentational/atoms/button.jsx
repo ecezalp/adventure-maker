@@ -1,26 +1,20 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import {theme1} from "../../../themes/theme1";
+import {getStyle} from "../../../styles/presentational/atoms/buttonStyle";
 
-const defaultButtonStyle = {
-  cursor: 'pointer',
-  border: '1px solid green',
-  borderRadius: '5px / 10px',
-  width: '100px',
-  textAlign: 'center',
-};
-
-export const Button = ({onClick, children}) => {
+export const Button = ({onClick, children, colorTheme = theme1}) => {
   return <div
     className="button"
     onClick={onClick}
-    style={defaultButtonStyle}
+    style={getStyle(colorTheme)}
   >
     {children}
   </div>
 };
 
-export const buttonStory = storiesOf('Button', module)
+export const buttonStory = storiesOf('Atoms/Button', module)
   .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
   .add('with some emoji', () => (
     <Button onClick={action('clicked')}>
