@@ -10,7 +10,6 @@ var BUILD_PATH = path.join(__dirname, './dist');
 var GLOBS = {
   assets: ['src/main/resources/images/*'],
   js_jsx: ['src/main/react/**/*.+(js|jsx)'],
-  scss: ['src/main/styles/**/*.+(scss|css)'],
 };
 
 // dotenv for Webpack
@@ -39,23 +38,6 @@ const WEBPACK_SRC_CONFIG = {
           presets: ['react', 'env', 'stage-2']
         }
       }, {
-        test: /\.(scss|css)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              minimize: {
-                safe: true
-              }
-            }
-          },
-          {
-            loader: "sass-loader",
-            options: {},
-          }
-        ]
-      }, {
         test: /(icons|fonts)/,
         loader: 'url-loader'
       }, {
@@ -72,31 +54,7 @@ const WEBPACK_SRC_CONFIG = {
     new webpack.DefinePlugin({
       'process.env': dotenvProcessedVariables,
     }),
-  ], optimization: {
-    splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      name: true,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    },
-  }, stats: {
-    warnings: false
-  }
+  ],
 };
 
 const WEBPACK_BUILD_CONFIG = _.merge({}, WEBPACK_SRC_CONFIG, {
@@ -104,51 +62,15 @@ const WEBPACK_BUILD_CONFIG = _.merge({}, WEBPACK_SRC_CONFIG, {
   output: {filename: 'bundle.js'}
 });
 
-const WEBPACK_STYLE_CONFIG = {
-  entry: './src/main/styles/main.scss',
-  module: {
-    rules: [
-      {
-        test: /\.(scss|css)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              url: false,
-              minimize: {
-                safe: true
-              }
-            }
-          },
-          {
-            loader: "sass-loader",
-            options: {},
-          }
-        ]
-      }
-    ]
-  }, resolve: {
-    extensions: ['.scss', '.css']
-  }, plugins: [
-    new MiniCssExtractPlugin({
-      filename: "bundle.css",
-    }),
-  ], stats: {
-    warnings: false
-  }
-};
-
-
 // Gulp tasks
 
 var plumber = require('gulp-plumber');
 var nodemon = require('gulp-nodemon');
 var del = require('del');
 
-gulp.task('build', ['buildStyle', 'buildCode']);
+gulp.task('build', ['buildCode']);
 
-gulp.task('watch', ['watchStyle', 'watchCode']);
+gulp.task('watch', ['watchCode']);
 
 gulp.task('start', ['build', 'getIndexHtml', 'getLogo'], function () {
   nodemon({
@@ -166,26 +88,9 @@ gulp.task('getLogo', function() {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('buildStyle', function () {
-  return gulp.src(GLOBS.scss)
-    .pipe(webpackStream(WEBPACK_STYLE_CONFIG))
-    .pipe(gulp.dest(BUILD_PATH))
-});
-
 gulp.task('buildCode', function () {
   return gulp.src(GLOBS.js_jsx)
     .pipe(webpackStream(WEBPACK_BUILD_CONFIG))
-    .pipe(gulp.dest(BUILD_PATH))
-});
-
-gulp.task('watchStyle', function () {
-  return gulp.src(GLOBS.scss)
-    .pipe(plumber(function () {
-      console.error(arguments)
-    }))
-    .pipe(webpackStream(_.merge({}, WEBPACK_STYLE_CONFIG, {
-      watch: true,
-    })))
     .pipe(gulp.dest(BUILD_PATH))
 });
 
