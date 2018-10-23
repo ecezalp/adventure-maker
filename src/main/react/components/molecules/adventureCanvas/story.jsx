@@ -42,7 +42,9 @@ const twoWayLinks = [
   getLink(4, 10),
 ];
 
-export const adventureCanvasStory = storiesOf('Molecules/Canvas', module)
+export const adventureCanvasStory = storiesOf('Molecules/AdventureCanvas', module)
   .add('empty', () => <AdventureCanvas/>)
-  .add('one way chain', () => <AdventureCanvas nodes={oneWayNodes} links={oneWayLinks}/>)
-  .add('two way chain', () => <AdventureCanvas nodes={twoWayNodes} links={twoWayLinks}/>);
+  .add('one way chain', () => <AdventureCanvas nodes={oneWayNodes} links={oneWayLinks} zoom={10}/>)
+  .add('two way chain', () => <AdventureCanvas nodes={twoWayNodes} links={twoWayLinks} zoom={10}/>)
+  .add('zoomed out', () => <AdventureCanvas nodes={twoWayNodes} links={twoWayLinks} zoom={5}/>)
+  .add('zoomed in', () => <AdventureCanvas nodes={twoWayNodes} links={twoWayLinks} zoom={20}/>);

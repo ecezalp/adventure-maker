@@ -1,4 +1,4 @@
-export const getStyle = (theme, depth) => {
+export const getStyle = (zoom, theme, depth) => {
   const base = {
     cursor: 'pointer',
     WebkitClipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
@@ -12,33 +12,33 @@ export const getStyle = (theme, depth) => {
     let {colors, font} = theme;
     return {
       ...base,
-      height: '40px',
-      width: '40px',
+      height: `${3.2 * zoom}px`,
+      width: `${3.2 * zoom}px`,
       backgroundColor: colors[depth],
       color: depth > 4 ? 'white' : 'black',
       fontFamily: font.family,
-      fontSize: font.size.medium,
+      fontSize: `${1.3 * zoom}px`,
     }
   }
   return {
     ...base,
-    height: '20px',
-    width: '20px',
+    height: `${1.6 * zoom}px`,
+    width: `${1.6 * zoom}px`,
     color: 'white',
     backgroundColor: 'black',
-    fontSize: '0.8rem',
+    fontSize: `${1.3 * zoom}px`,
   }
 };
 
-export const getBorderStyle = (isOneWay) => ({
+export const getBorderStyle = (zoom, isOneWay) => ({
   cursor: 'pointer',
   WebkitClipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
   clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
-  height: isOneWay ? '22px' : '42px',
-  width: isOneWay ? '22px' : '42px',
+  height: isOneWay ? `${1.7 * zoom}px` : `${3.3 * zoom}px`,
+  width: isOneWay ? `${1.7 * zoom}px` : `${3.3 * zoom}px`,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   backgroundColor: 'lightgray',
-  margin: '5px',
+  margin: isOneWay ? `${0.5 * zoom}px` : `${1.3 * zoom}px`,
 });

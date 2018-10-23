@@ -1,11 +1,10 @@
-const baseStyle = (theme) => ({
+const baseStyle = theme => ({
   backgroundColor: theme.backgroundColor,
   minHeight: '600px',
   minWidth: '400px',
   height: '100vh',
   width: '30vw',
-  position: 'fixed',
-  left: 0,
+  zIndex: -1,
 });
 
 export const getStyle = (theme, depth) =>
@@ -19,7 +18,7 @@ export const getStyle = (theme, depth) =>
     }
     : {
       ...baseStyle(theme),
-      display: 'grid',
+      // display: 'grid',
       gridTemplateRows: `repeat(${depth + 1}, 1fr)`
     };
 

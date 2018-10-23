@@ -2,6 +2,7 @@ import React from 'react';
 import AdventureCanvas from "../molecules/adventureCanvas/adventureCanvas";
 import {AdventureNode} from "../atoms/adventureNode/adventureNode";
 import {AdventureLinkLayer} from "../atoms/adventureLinkLayer/adventureLinkLayer";
+import ActionPanel from "../molecules/actionPanel/actionPanel";
 
 export default class Landing extends React.Component {
   constructor(props) {
@@ -10,7 +11,6 @@ export default class Landing extends React.Component {
   }
 
   render() {
-
     const clickHandler = () => {
     };
 
@@ -45,8 +45,10 @@ export default class Landing extends React.Component {
       getLink(4, 10),
     ];
 
-    return <div>
+    return <div style={{display: 'flex'}}>
+      <ActionPanel/>
       <AdventureCanvas
+        zoom={10}
         nodes={twoWayNodes}
         links={twoWayLinks}
       />

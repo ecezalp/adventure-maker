@@ -6,7 +6,7 @@ import AdventureLink from "./adventureLink";
 import {style} from "./style";
 
 //TODO: Use refs instead of modifying DOM
-export const AdventureLinkLayer = ({theme = theme1, links}) => {
+export const AdventureLinkLayer = ({theme = theme1, links, zoom = 10}) => {
 
   const getRectById = id => document.getElementById(id).getBoundingClientRect();
 
@@ -32,7 +32,7 @@ export const AdventureLinkLayer = ({theme = theme1, links}) => {
   };
 
   return <svg id="svg" style={style}>
-    {links.map(link => <AdventureLink link={link} color={theme.colors[10]}/>)}
+    {links.map(link => <AdventureLink link={link} color={theme.colors[10]} zoom={zoom}/>)}
     {drawLinesByModifyingDOM()}
   </svg>
 };
@@ -40,4 +40,5 @@ export const AdventureLinkLayer = ({theme = theme1, links}) => {
 AdventureLinkLayer.propTypes = {
   theme: PropTypes.object,
   links: PropTypes.array.isRequired,
+  zoom: PropTypes.number,
 };
