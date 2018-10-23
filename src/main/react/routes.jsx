@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {Route} from 'react-router-dom';
-import Skeleton from "./components/molecules/adventureCanvas";
+import Landing from "./components/pages/landing";
 
 export default function Routes() {
 
-  const landing = () => <Skeleton/>;
+  const landing = () => <Landing/>;
 
   return <div className="app-container">
     <Route exact path="/" component={landing}/>

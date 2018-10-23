@@ -40,4 +40,5 @@ export const getBorderStyle = (isOneWay) => ({
   justifyContent: 'center',
   alignItems: 'center',
   backgroundColor: 'lightgray',
+  margin: '5px',
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {theme1} from "../../../themes/theme1";
 import {getLinks} from "../../../helpers/storybookHelpers";
-import AdventureLink from "../adventureLink/adventureLink";
+import AdventureLink from "./adventureLink";
 import {style} from "./style";
 
 //TODO: Use refs instead of modifying DOM
