@@ -1,3 +1,8 @@
+## data structure
+
+arrayOf(linkedList) seklinde bir yapisi var. end kismina tekli node gelince sadece sona ekleniyor. ikili node gelince list klonlanip end node farkli olarak ekleniyor. linkedListler gidisati temsil ediyor.
+
+
 ## featurelar
 
 - email ile login
@@ -22,11 +27,22 @@
 style yarattiriyor ekrana renk koyma arti font secimi konusunda degisiklikler ve daha detayli buton yapimi
 
 ### user forumu
-
+forum. => subdomain
 her oyunun threadi var. 
 reddit tarzi upvoteli forum. 
 premium adamlara ona gore ozel flair var. 
-genel threadlerde feature request falan var.
+insanlarin biriktirdikleri oduller flair'de gosteriliyor. 
+ingilizce turkce korean
+
+genel threadlerde oyunlarla alakali fanfic ivir zivir falan var.
+
+## oduller
+forum.
+/leaderboard
+/leaderboard/{leaderboardCategory}/{leaderboardFrequency}
+/user/achievements
+
+leaderboardda gorule
 
 # en kucuk urun
 

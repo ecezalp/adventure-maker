@@ -1,5 +1,5 @@
 const baseStyle = theme => ({
-  backgroundColor: theme.backgroundColor,
+  backgroundColor: 'rgba(247,247,247,0.3)',
   minHeight: '600px',
   minWidth: '400px',
   height: '100vh',
@@ -22,11 +22,11 @@ export const getStyle = (theme, depth) =>
       gridTemplateRows: `repeat(${depth + 1}, 1fr)`
     };
 
-export const depthStyle = maxDepth => ({
+export const depthStyle = flexDirection => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  flexDirection: maxDepth == 0 ? 'column' : 'row',
+  flexDirection,
 });
 
 export const emptyStyle = {

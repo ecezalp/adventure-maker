@@ -12,27 +12,9 @@ export default function AdventureCanvas({nodes, links, theme = theme1, zoom}) {
     Your canvas is currently empty. Add a page!
   </div>;
 
-  const groupNodesByDepth = nodes =>
-    _.groupBy(nodes, node => node.depth);
-
-  const depthToRow = (nodes, zoom) => <div style={depthStyle(getMaxDepth(nodes))}>
-    {nodes.map(node => <AdventureNode
-      id={node.id}
-      depth={node.depth}
-      onClick={() => {
-      }}
-      zoom={zoom}
-    />)}
-  </div>;
-
   const getMaxDepth = nodes =>
-    Object.keys(groupNodesByDepth(nodes))
-      .sort()[Object.keys(groupNodesByDepth(nodes)).length - 1];
-
-  const getNodes = (nodes, zoom) =>
-    Object.values(groupNodesByDepth(nodes))
-      .sort()
-      .map(nodes => depthToRow(nodes, zoom));
+    Object.keys(groupNodesByField(nodes, "rowIndex"))
+      .sort()[Object.keys(groupNodesByField(nodes, "rowIndex")).length - 1];
 
   const linkLayer = links &&
     <AdventureLinkLayer
@@ -41,8 +23,64 @@ export default function AdventureCanvas({nodes, links, theme = theme1, zoom}) {
       zoom={zoom}
     />;
 
+  const getNode = (node, zoom) =>
+    <AdventureNode
+      id={node.id}
+      depth={node.rowIndex}
+      onClick={() => {
+      }}
+      zoom={zoom}
+    />;
+
+  const groupNodesByField = (nodes, field) =>
+    _.groupBy(nodes, node => node[field]);
+
+  const getRowByRowIndex = (nodes, zoom) =>
+    <div style={depthStyle("row")}>
+      {nodes.map(node => getNode(node, zoom))}
+    </div>;
+
+  const getColumnByColumnIndex = groupedNodes =>
+    <div style={{
+      ...depthStyle("column"),
+    }}>
+      {groupedNodes.map(groupedNode => getNode(groupedNode, zoom))}
+    </div>;
+
+  const extractNodes = (nodes, zoom, field, callback) =>
+    Object.values(groupNodesByField(nodes, field))
+      .map(groupedNodes => callback(groupedNodes, zoom));
+
+  const getColumnNodes = (nodes, zoom) =>
+    extractNodes(nodes, zoom, "columnIndex", getColumnByColumnIndex);
+
+  const getRowNodes = (nodes, zoom) =>
+    extractNodes(nodes, zoom, "rowIndex", getRowByRowIndex);
+
+  const reduceNodes = nodes =>
+    nodes.reduce((acc, el) => {
+      if (el.rowIndex && !el.columnIndex) acc.rowNodes.push(el);
+      if (!el.rowIndex && el.columnIndex) acc.columnNodes.push(el);
+      return acc;
+    }, {
+      columnNodes: [],
+      rowNodes: [],
+    });
+
+  const getAllNodes = (nodes, zoom) => {
+    const reducedNodes = reduceNodes(nodes);
+    return [
+      ...getRowNodes(reducedNodes.rowNodes, zoom),
+      ...getColumnNodes(reducedNodes.columnNodes, zoom),
+    ];
+  };
+
+  const renderedNodes = nodes && nodes.length > 0
+    ? getAllNodes(nodes, zoom)
+    : emptyMessage;
+
   return <div style={getStyle(theme, getMaxDepth(getMaxDepth(nodes)))}>
-    {nodes && nodes.length > 0 ? getNodes(nodes, zoom) : emptyMessage}
+    {renderedNodes}
     {linkLayer}
   </div>;
 }

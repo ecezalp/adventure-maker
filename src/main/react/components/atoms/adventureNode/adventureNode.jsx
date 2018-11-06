@@ -12,7 +12,7 @@ export const AdventureNode = ({onClick, id, theme = theme1, depth, style, zoom =
 
   const node = <div
     className="adventure-node"
-    onClick={onClick}
+    onClick={() => onClick(id)}
     style={{...style, ...nodeStyle}}
   >
     {id}

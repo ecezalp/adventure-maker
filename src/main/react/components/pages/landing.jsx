@@ -11,6 +11,9 @@ export default class Landing extends React.Component {
   }
 
   render() {
+
+    console.log(this.props);
+
     const clickHandler = () => {
     };
 
@@ -49,7 +52,7 @@ export default class Landing extends React.Component {
       <ActionPanel/>
       <AdventureCanvas
         zoom={10}
-        nodes={twoWayNodes}
+        nodes={this.props.nodes}
         links={twoWayLinks}
       />
     </div>
